@@ -1,6 +1,8 @@
 import React from 'react';
+import axios from 'axios';
 import {MovieCard} from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+import { LoginView } from '../login-view/login-view';
 // create MainView component using the generic React.Component template as its foundation.
 //render ->returns the visual representation of the component(should contain only one root element)
 export class MainView extends React.Component {
@@ -9,28 +11,45 @@ export class MainView extends React.Component {
   constructor() {
     super();
     this.state = {
-      movies: [
-        {_id: 1, Title: 'Vertigo', Description: 'Vertigo is a 1958 American film noir psychological thriller film directed and produced by Alfred Hitchcock...', ImagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Vertigomovie.jpg/155px-Vertigomovie.jpg'},
-        {
-          _id: 2,
-          Title: 'Family Plot',
-          Description: 'A phony psychic/con artist and her taxi driver/private investigator boyfriend encounter a pair of serial kidnappers while trailing a missing heir in California......',
-          ImagePath: 'https://upload.wikimedia.org/wikipedia/en/3/3a/Family_plot_movie_poster.jpg',
-        },
-        {_id: 3, Title: 'Sunchaser', Description: 'Michael Reynolds is a rich oncologist who has a one hundred seventy-five thousand dollar sports car, a multi-million dollar house, and a new boost in his career. Brandon Blue Monroe is a dying patient who kidnaps Reynolds. They are going to a legendary Navajo healing place while a manhunt closes in. Soon the men get closer in understanding, and to the place that may save them both.....', ImagePath: 'https://upload.wikimedia.org/wikipedia/en/2/2b/Sunchaser-Theatrical_Poster.jpg'},
-      ],
-      selectedMovie: null
-    };
-  }
+      movies: [ ],
+      selectedMovie: null,
+             user: null
+    }; }
+    componentDidMount(){
+      axios.get('https://movie-api-db-30.herokuapp.com/movies')
+        .then(response => {
+          this.setState({
+            movies: response.data
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+        
+    }
+ 
+  /*
   setSelectedMovie(newSelectedMovie) {
     this.setState({
       selectedMovie: newSelectedMovie
-    });
+    });*/
+
+    setSelectedMovie(movie) {
+      this.setState({
+        selectedMovie: movie
+      });
+    }
+
+    onLoggedIn(user) {
+      this.setState({
+        user
+      });
+    }
   } render() {
     const { movies, selectedMovie } = this.state;
 
-
-    if (movies.length === 0) return <div className="main-view">The list is empty!</div>;
+    if (movies.length === 0) return <div className="main-view" />;
 
     return (
       <div className="main-view">
