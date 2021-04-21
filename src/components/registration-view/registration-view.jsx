@@ -31,19 +31,17 @@ export function RegistrationView(props){
       Birthday:
       <input type="birthday" value={birthday} onChange={e => setBirthday(e.target.value)} />
     </label>
-
-
-
-
     <button type="submit" onClick={handleSubmit}>Submit</button>
   </form>
   );}
 
-RegistrationView.PropTypes={
-  newRegistration: PropTypes.shape({
-  username:PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  email:PropTypes.string.isRequired,
-  birthday: PropTypes.string.isRequired,}),
-  newRegistration:PropTypes.func.isRequired,
-};
+  RegistrationView.propTypes = {
+    newRegistration: PropTypes.shape({
+      username: PropTypes.string.isRequired,
+      password: PropTypes.string.isRequired,
+       email:PropTypes.string.isRequired,
+      birthday: PropTypes.string.isRequired,
+    }),
+    onRegister: PropTypes.func.isRequired, 
+    
+  };
