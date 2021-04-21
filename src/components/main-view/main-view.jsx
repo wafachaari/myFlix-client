@@ -30,12 +30,7 @@ export class MainView extends React.Component {
        
     }
  
-      setSelectedMovie(movie) {
-      this.setState({
-        selectedMovie: movie
-      });
-    }
-
+     
     onLoggedIn(user) {
       this.setState({
         user
@@ -48,16 +43,21 @@ newRegistration
     })
   }
     
-    
+  setSelectedMovie(movie) {
+    this.setState({
+      selectedMovie: movie
+    });
+  }
+
     render() {
     const { movies, selectedMovie,user,newRegistration } = this.state;
 
-/*if (!user) return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
+if (!user) return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
 if (!newRegistration)
       return <RegistrationView onRegister={(newRegistration) => this.onRegister(newRegistration)} />;
 
 
-*/
+
     if (movies.length === 0) return <div className="main-view" />;
 
     return (
