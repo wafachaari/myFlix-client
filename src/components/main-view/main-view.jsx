@@ -3,6 +3,7 @@ import axios from 'axios';
 import {MovieCard} from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
+import {RegistrationView} from '../registration-view/registration-view'
 // create MainView component using the generic React.Component template as its foundation.
 //render ->returns the visual representation of the component(should contain only one root element)
 export class MainView extends React.Component {
@@ -13,7 +14,8 @@ export class MainView extends React.Component {
     this.state = {
       movies: [ ],
       selectedMovie: null,
-             user: null
+      user: null,
+      newRegistration:null,
     }; }
     componentDidMount(){
       axios.get('https://movie-api-db-30.herokuapp.com/movies')
@@ -25,17 +27,10 @@ export class MainView extends React.Component {
         .catch(error => {
           console.log(error);
         });
-
-        
+       
     }
  
-  /*
-  setSelectedMovie(newSelectedMovie) {
-    this.setState({
-      selectedMovie: newSelectedMovie
-    });*/
-
-    setSelectedMovie(movie) {
+      setSelectedMovie(movie) {
       this.setState({
         selectedMovie: movie
       });
@@ -46,9 +41,23 @@ export class MainView extends React.Component {
         user
       });
     }
-  } render() {
-    const { movies, selectedMovie } = this.state;
+  onRegister(newRegistration)
+  {
+    this.setState({
+newRegistration
+    })
+  }
+    
+    
+    render() {
+    const { movies, selectedMovie,user,newRegistration } = this.state;
 
+/*if (!user) return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
+if (!newRegistration)
+      return <RegistrationView onRegister={(newRegistration) => this.onRegister(newRegistration)} />;
+
+
+*/
     if (movies.length === 0) return <div className="main-view" />;
 
     return (
