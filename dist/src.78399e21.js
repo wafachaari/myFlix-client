@@ -32808,13 +32808,6 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
-    key: "setSelectedMovie",
-    value: function setSelectedMovie(movie) {
-      this.setState({
-        selectedMovie: movie
-      });
-    }
-  }, {
     key: "onLoggedIn",
     value: function onLoggedIn(user) {
       this.setState({
@@ -32829,6 +32822,13 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "setSelectedMovie",
+    value: function setSelectedMovie(movie) {
+      this.setState({
+        selectedMovie: movie
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -32838,13 +32838,16 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           selectedMovie = _this$state.selectedMovie,
           user = _this$state.user,
           newRegistration = _this$state.newRegistration;
-      /*if (!user) return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
-      if (!newRegistration)
-            return <RegistrationView onRegister={(newRegistration) => this.onRegister(newRegistration)} />;
-      
-      
-      */
-
+      if (!user) return /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
+        onLoggedIn: function onLoggedIn(user) {
+          return _this3.onLoggedIn(user);
+        }
+      });
+      if (!newRegistration) return /*#__PURE__*/_react.default.createElement(_registrationView.RegistrationView, {
+        onRegister: function onRegister(newRegistration) {
+          return _this3.onRegister(newRegistration);
+        }
+      });
       if (movies.length === 0) return /*#__PURE__*/_react.default.createElement("div", {
         className: "main-view"
       });
