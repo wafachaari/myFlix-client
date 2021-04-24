@@ -1,3 +1,25 @@
+.open-button {
+  color: black;
+}
+.submit-button {
+  background-color: black;
+}
+
+.login-button {
+  background-color: white;
+  color: black;
+}
+.submit-button {
+  background-color: black;
+}
+
+.login-button {
+  background-color: white;
+  color: black;
+}
+.container-main {
+  margin-top: 100px;
+}
 .my-flix {
   color: steelblue;
 }
