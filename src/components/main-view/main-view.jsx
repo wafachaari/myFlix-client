@@ -24,25 +24,50 @@ export class MainView extends React.Component {
       user: null,
       newRegistration:null,
     }; }
-    componentDidMount(){
-      axios.get('https://movie-api-db-30.herokuapp.com/movies')
-        .then(response => {
-          this.setState({
-            movies: response.data
-          });
-        })
-        .catch(error => {
-          console.log(error);
-        });
-       
+    componentDidMount() {
+      let accessToken = localStorage.getItem('token');
+  if (accessToken !== null) {
+    this.setState({
+      user: localStorage.getItem('user')
+    });
+    this.getMovies(accessToken);
+  }
     }
- 
-     
+   
+
+    
+    onLoggedIn(authData) {console.log("dd");
+      console.log(authData);
+      this.setState({
+        user: authData.user.Username
+      });
+    
+      localStorage.setItem('token', authData.token);
+      localStorage.setItem('user', authData.user.Username);
+      this.getMovies(authData.token);
+    }/*
     onLoggedIn(user) {
       this.setState({
         user
       });
+    }*/
+    
+    getMovies(token) {
+      axios.get('https://movie-api-db-30.herokuapp.com/movies', {
+        headers: { Authorization: `Bearer ${token}`}
+      })
+      .then(response => {
+        // Assign the result to the state
+        this.setState({
+          movies: response.data
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     }
+
+
   onRegister(newRegistration)
   {
     this.setState({
@@ -60,11 +85,11 @@ newRegistration
 
     const { movies, selectedMovie,user,newRegistration } = this.state;
 
-//if (!user) return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
+    if (!user) return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
 if (!newRegistration)
       return <RegistrationView onRegister={(newRegistration) => this.onRegister(newRegistration)} />;
 
- 
+
     if (movies.length === 0) return <div className="main-view" />;
 
     return (
