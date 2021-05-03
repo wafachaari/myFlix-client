@@ -42,11 +42,21 @@ export function LoginView(props) {
          placeholder="Enter username"       
          value={username} 
          onChange={e => setUsername(e.target.value)} />
-         
+          <Form.Control.Feedback type="invalid">
+            Username isn't at least 5 characters or alphanumeric.
+          </Form.Control.Feedback>
       </Form.Group>
       <Form.Group controlId="formBasicPassword">
              <Form.Label>Password</Form.Label>
              <Form.Control type="password" placeholder="Password" value={password}  onChange={e => setPassword(e.target.value)}/>
+             <Form.Control.Feedback type="invalid">
+            Please enter a password.
+          </Form.Control.Feedback>
+          {!login ? null
+          :
+          <Form.Text className="incorrect-text">
+            Incorrect username or password.
+          </Form.Text>}
       </Form.Group>
       <Button className="submit-button" variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
       </Form>
