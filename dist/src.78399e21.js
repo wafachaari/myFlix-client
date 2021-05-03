@@ -51206,7 +51206,9 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
         headers: {
           'Authorization': "Bearer ".concat(localStorage.getItem('token'))
         }
-      }).then(function (response) {//  this.props.onloggedOut();
+      }).then(function (response) {
+        alert(" has been deleted");
+        window.location.pathname = "/";
       }).catch(function (error) {
         console.error(error);
       });
@@ -51454,9 +51456,7 @@ function RegistrationView(props) {
     }
   }), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Control.Feedback, {
     type: "invalid"
-  }, "Please choose a username that's at least 5 characters and is alphanumeric."), !used ? null : /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Text, {
-    className: "incorrect-text"
-  }, "Username is already being used.")), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Group, {
+  }, "Please choose a username that's at least 5 characters and is alphanumeric.")), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Group, {
     controlId: "formBasicPassword"
   }, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Label, null, "Password"), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Control, {
     type: "password",
@@ -51475,8 +51475,8 @@ function RegistrationView(props) {
     onChange: function onChange(e) {
       return setEmail(e.target.value);
     },
-    placeholder: "Enter Email",
-    pattern: "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$"
+    placeholder: "Enter Email" //  pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+
   }), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Control.Feedback, {
     type: "invalid"
   }, "Please enter an email in the correct format.")), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Group, {
@@ -51620,9 +51620,7 @@ function LoginView(props) {
     }
   }), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Control.Feedback, {
     type: "invalid"
-  }, "Please enter a password."), !login ? null : /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Text, {
-    className: "incorrect-text"
-  }, "Incorrect username or password.")), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Button, {
+  }, "Please enter a password.")), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Button, {
     className: "submit-button",
     variant: "primary",
     type: "submit",
@@ -52269,7 +52267,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65092" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65260" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
