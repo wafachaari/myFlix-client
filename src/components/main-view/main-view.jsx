@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-
+import { ProfileView } from '../profile-view/profile-view';
 import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
 import {Navbar,Nav,Form,FormControl} from 'react-bootstrap';
@@ -45,7 +45,6 @@ export class MainView extends React.Component {
       this.setState({
         user: authData.user.Username
       });
-    
       localStorage.setItem('token', authData.token);
       localStorage.setItem('user', authData.user.Username);
       this.getMovies(authData.token);
@@ -100,18 +99,21 @@ newRegistration
 <Navbar bg="dark"
  collapseOnSelect
   fixed='top' expand="lg" variant="dark">
-  <Navbar.Brand href="#Movies" >myFlix</Navbar.Brand>
+  <Navbar.Brand href="/" >myFlix</Navbar.Brand>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="mr-auto">
-      <Nav.Link href="#Moives">Movies</Nav.Link>
-      <Nav.Link href="#link">Account</Nav.Link>
-      <Nav.Link href="#link">log out</Nav.Link>
+    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+    <Button variant="outline-success">Search</Button>
            </Nav>
     <Form inline>
-      <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-      <Button variant="outline-success">Search</Button>
-      <button onClick={() => { this.onLoggedOut() }}>Logout</button>
+     
+      <Link to={`/`}>  
+       <Button variant="outline-success" onClick={() => { this.onLoggedOut() }}>Logout</Button>
+       </Link>
+      <Link to={`/users/${localStorage.getItem('user')}`}>
+                <Button variant="outline-success"  >Your Profile</Button>
+              </Link>
     </Form>
   </Navbar.Collapse>
 </Navbar>
@@ -144,6 +146,27 @@ newRegistration
 } />
 
 
+
+ 
+          <Route
+              path="/genres/:name"
+              render={({ match }) => {
+                if (!movies) return <div className="main-view" />;
+                return (
+                  <GenreView
+                    genre={movies.find(
+                      (m) => m.Genre.Name === match.params.name
+                    )}
+                    movies={movies}
+                  />
+                );
+              }}
+            />
+<Route path="/users/:username" render={() => {
+              if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+              if (movies.length === 0) return <div className="main-view" />;
+              return <ProfileView onLogOut={user => this.onLogOut(!user)} />
+            }} />
      </Row>
       </Container>
       </Router>
