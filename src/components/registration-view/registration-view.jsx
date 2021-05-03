@@ -51,11 +51,7 @@ export function RegistrationView(props){
            <Form.Control.Feedback type="invalid">
              Please choose a username that's at least 5 characters and is alphanumeric.
           </Form.Control.Feedback>
-          {!used ? null
-          :
-          <Form.Text className="incorrect-text">
-            Username is already being used.
-          </Form.Text>}
+          
       </Form.Group>
       <Form.Group controlId="formBasicPassword">
              <Form.Label>Password</Form.Label>
@@ -72,7 +68,7 @@ export function RegistrationView(props){
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder='Enter Email'
-            pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+          //  pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
           />
            <Form.Control.Feedback type="invalid">
              Please enter an email in the correct format.
