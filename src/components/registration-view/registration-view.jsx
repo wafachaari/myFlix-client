@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import { Form, Button } from 'react-bootstrap';
 import './registration-view.scss';
 import Container from 'react-bootstrap/Container';
+ 
+import { Link } from 'react-router-dom'
+import axios from 'axios';
+
 export function RegistrationView(props){
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -14,7 +18,7 @@ export function RegistrationView(props){
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    /*axios.post('https://movie-api-db-30.herokuapp.com/users', {
+    axios.post('https://movie-api-db-30.herokuapp.com/users', {
       Username: username,
       Password: password,
       Email: email,
@@ -28,9 +32,9 @@ export function RegistrationView(props){
     .catch(e => {
       console.log('error registering the user')
     });
-*/
-    console.log(username, password, email, birthday);
-   props.onRegister();
+
+    //console.log(username, password, email, birthday);
+   //props.onRegister();
   };
  
   return (
@@ -75,13 +79,18 @@ export function RegistrationView(props){
   <Button className="submit-button" variant="primary"  type="submit" onClick={handleSubmit}>Submit</Button>
  </Form>
  <Form.Group>
- <Form.Text className="text-muted"> Already have an account?</Form.Text>
-    <Button className="login-button" >login</Button>
+  
+ <Form.Group className="login-group" controlId="formLogin">
+          <Form.Text className="text-muted">Already have an account?</Form.Text>
+          <Link to={`/`}>
+            <Button className="login-link">Login here</Button>
+          </Link>
+        </Form.Group>
   
  </Form.Group>
  </Container>
   );}
-
+/*
   RegistrationView.propTypes = {
     newRegistration: PropTypes.shape({
       username: PropTypes.string.isRequired,
@@ -91,4 +100,4 @@ export function RegistrationView(props){
     }),
     onRegister: PropTypes.func.isRequired, 
     
-  };
+  };*/
