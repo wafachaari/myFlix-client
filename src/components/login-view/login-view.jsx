@@ -52,11 +52,7 @@ export function LoginView(props) {
              <Form.Control.Feedback type="invalid">
             Please enter a password.
           </Form.Control.Feedback>
-          {!login ? null
-          :
-          <Form.Text className="incorrect-text">
-            Incorrect username or password.
-          </Form.Text>}
+         
       </Form.Group>
       <Button className="submit-button" variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
       </Form>
