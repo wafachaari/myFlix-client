@@ -21,6 +21,7 @@ return(
   <Link to={`/movies/${movie._id}`}>
             <Button variant="link">Open</Button>
           </Link>
+          
 </Card.Body>
   </Card>
 
