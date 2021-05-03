@@ -141,7 +141,8 @@ updateUser(e, username, password, email, birthday){
       headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
     })
       .then(response => {
-      //  this.props.onloggedOut();
+        alert( " has been deleted");
+         window.location.pathname = "/";
       })
       .catch(error => {
         console.error(error);
