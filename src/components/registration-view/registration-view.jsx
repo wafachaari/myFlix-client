@@ -46,12 +46,23 @@ export function RegistrationView(props){
          <Form.Control type='text' 
          placeholder="Enter username"       
          value={username} 
+         pattern="^[a-zA-Z0-9]{5,}"
          onChange={e => setUsername(e.target.value)} />
-         
+           <Form.Control.Feedback type="invalid">
+             Please choose a username that's at least 5 characters and is alphanumeric.
+          </Form.Control.Feedback>
+          {!used ? null
+          :
+          <Form.Text className="incorrect-text">
+            Username is already being used.
+          </Form.Text>}
       </Form.Group>
       <Form.Group controlId="formBasicPassword">
              <Form.Label>Password</Form.Label>
              <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)}/>
+             <Form.Control.Feedback type="invalid">
+             Please enter a password.
+          </Form.Control.Feedback>
       </Form.Group>
 
       <Form.Group controlId='formBasicEmail'>
@@ -61,7 +72,11 @@ export function RegistrationView(props){
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder='Enter Email'
+            pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
           />
+           <Form.Control.Feedback type="invalid">
+             Please enter an email in the correct format.
+          </Form.Control.Feedback>
        </Form.Group>   
      <Form.Group controlId='formBasicBirthday'>
           <Form.Label>Birthday</Form.Label>
@@ -71,6 +86,9 @@ export function RegistrationView(props){
             onChange={(e) => setBirthday(e.target.value)}
             placeholder='Enter Birthday'
           />
+            <Form.Control.Feedback type="invalid">
+             Please enter a birthdate.
+          </Form.Control.Feedback>
         </Form.Group>
     
         <Form.Group controlId="formBasicCheckbox">
