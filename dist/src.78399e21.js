@@ -51448,10 +51448,15 @@ function RegistrationView(props) {
     type: "text",
     placeholder: "Enter username",
     value: username,
+    pattern: "^[a-zA-Z0-9]{5,}",
     onChange: function onChange(e) {
       return setUsername(e.target.value);
     }
-  })), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Group, {
+  }), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Control.Feedback, {
+    type: "invalid"
+  }, "Please choose a username that's at least 5 characters and is alphanumeric."), !used ? null : /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Text, {
+    className: "incorrect-text"
+  }, "Username is already being used.")), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Group, {
     controlId: "formBasicPassword"
   }, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Label, null, "Password"), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Control, {
     type: "password",
@@ -51460,7 +51465,9 @@ function RegistrationView(props) {
     onChange: function onChange(e) {
       return setPassword(e.target.value);
     }
-  })), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Group, {
+  }), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Control.Feedback, {
+    type: "invalid"
+  }, "Please enter a password.")), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Group, {
     controlId: "formBasicEmail"
   }, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Label, null, "Email"), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Control, {
     type: "email",
@@ -51468,8 +51475,11 @@ function RegistrationView(props) {
     onChange: function onChange(e) {
       return setEmail(e.target.value);
     },
-    placeholder: "Enter Email"
-  })), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Group, {
+    placeholder: "Enter Email",
+    pattern: "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$"
+  }), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Control.Feedback, {
+    type: "invalid"
+  }, "Please enter an email in the correct format.")), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Group, {
     controlId: "formBasicBirthday"
   }, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Label, null, "Birthday"), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Control, {
     type: "date",
@@ -51478,7 +51488,9 @@ function RegistrationView(props) {
       return setBirthday(e.target.value);
     },
     placeholder: "Enter Birthday"
-  })), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Group, {
+  }), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Control.Feedback, {
+    type: "invalid"
+  }, "Please enter a birthdate.")), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Group, {
     controlId: "formBasicCheckbox"
   }, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Check, {
     type: "checkbox",
@@ -51595,7 +51607,9 @@ function LoginView(props) {
     onChange: function onChange(e) {
       return setUsername(e.target.value);
     }
-  })), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Group, {
+  }), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Control.Feedback, {
+    type: "invalid"
+  }, "Username isn't at least 5 characters or alphanumeric.")), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Group, {
     controlId: "formBasicPassword"
   }, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Label, null, "Password"), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Control, {
     type: "password",
@@ -51604,7 +51618,11 @@ function LoginView(props) {
     onChange: function onChange(e) {
       return setPassword(e.target.value);
     }
-  })), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Button, {
+  }), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Control.Feedback, {
+    type: "invalid"
+  }, "Please enter a password."), !login ? null : /*#__PURE__*/_react.default.createElement(_reactBootstrap.Form.Text, {
+    className: "incorrect-text"
+  }, "Incorrect username or password.")), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Button, {
     className: "submit-button",
     variant: "primary",
     type: "submit",
@@ -52251,7 +52269,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50656" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65092" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
