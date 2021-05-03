@@ -6,25 +6,45 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 import { Form, Button, CardDeck } from 'react-bootstrap';
  
+ 
+import axios from "axios";
+
 export class MovieView extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {};
+  }
   
+  addFavorite(movie) {
+    let token = localStorage.getItem("token");
+    let url =
+      "https://movie-api-db-30.herokuapp.com/users/" +
+      localStorage.getItem("user") +
+      "/movies/" +
+      movie._id;
 
-  keypressCallback(event) {
-    console.log(event.key);
+    console.log(token);
+
+    axios
+      .post(url, "", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log(response);
+          console.log("Added to favorites!");
+        
+         
+      });
   }
 
-  componentDidMount() {
-    document.addEventListener('keypress', this.keypressCallback);
-  }
-  componentWillUnmount() {
-    document.removeEventListener('keypress', this.keypressCallback);
-  }
+ 
   render() {
-    const { movie, onBackClick } = this.props;
+    const { movie } = this.props;
 
-    return (
+    if (!movie) return null;
 
-
+return(
       <Card className="movie-view" style={{ width: '32rem' }}>
       <Card.Img variant="top" src={movie.ImagePath} />
       <Card.Body>
@@ -35,61 +55,22 @@ export class MovieView extends React.Component {
             <ListGroup.Item>Director: {movie.Director.Name}</ListGroup.Item>
             
         </ListGroup>
+        <ListGroup.Item>
+       
+           
+        <Button
+                variant="primary"
+                size="sm"
+                onClick={() => this.addFavorite(movie)}
+              >
+                Add to Favorites
+              </Button>
+              
+              </ListGroup.Item>
+             
       </Card.Body>
-      </Card>
-      /*<div className="movie-view">
-        <div className="movie-poster">
-          <img src={movie.ImagePath} />
-        </div>
-        <div className="movie-title">
-          <span className="label">Title: </span>
-          <span className="value">{movie.Title}</span>
-        </div>
-        <div className="movie-description">
-          <span className="label">Description: </span>
-          <span className="value">{movie.Description}</span>
-        </div>
-
-        <div className="movie-genre">
-          <span className="label">Genre: </span>
-          <span className="value">{movie.Genre.Name}</span>
-        </div>
-        <div className="movie-director">
-          <span className="label">Director: </span>
-          <span className="value">{movie.Director.Name}</span>
-        </div>
-        <Link to={`/directors/${movie.Director.Name}`}>
-  <Button variant="link">Director</Button>
-</Link>
-
-<Link to={`/genres/${movie.Genre.Name}`}>
-  <Button variant="link">Genre</Button>
-</Link>
-        <button onClick={() => { onBackClick(null); }}>Back</button>
-
-      </div>*/
+      </Card> 
     );
   }
 }
-
-MovieView.propTypes = {
-  movie: PropTypes.shape({
-    Title: PropTypes.string.isRequired,
-    Description: PropTypes.string.isRequired,
-    ImagePath: PropTypes.string.isRequired,
-    Genre: PropTypes.shape({
-      Name:PropTypes.string.isRequired,
-      Description:PropTypes.string.isRequired,
-
-    }),
-    Director:PropTypes.shape({
-      Name:PropTypes.string.isRequired,
-
-    Bio: PropTypes.string.isRequired,
-    Birth: PropTypes.string.isRequired,
-    Death: PropTypes.string,
-  }),
-
-  }).isRequired,
- // onMovieClick: PropTypes.func.isRequired
-};
+ 
