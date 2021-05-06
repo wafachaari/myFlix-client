@@ -14,7 +14,7 @@ import { Navbar, Nav, Form, FormControl, NavbarBrand, NavItem } from 'react-boot
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 
-import { setMovies } from '../../actions/actions';
+import { setMovies, setUser } from '../../actions/actions';
 import MoviesList from '../movies-list/movies-list';
 import PropTypes from 'prop-types';
 
@@ -43,10 +43,12 @@ import './main-view.scss';
 
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
+    let user = localStorage.getItem('user')
     if (accessToken !== null) {
-      this.setState({
+     /* this.setState({
         user: localStorage.getItem('user')
-      });
+      });*/
+      this.props.setUser(user);
       this.getMovies(accessToken);
     }
   }
@@ -72,9 +74,10 @@ import './main-view.scss';
 
   onLoggedIn(authData) {
     console.log(authData);
-    this.setState({
+    this.props.setUser(authData.user.Username);
+    /*this.setState({
       user: authData.user.Username
-    });
+    });*/
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
@@ -95,17 +98,19 @@ import './main-view.scss';
   onLoggedOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    this.setState({
+    this.props.setUser(user);
+    localStorage.clear();
+  /*  this.setState({
       user: null
-    });
+    });*/
   }
 
 
   render() {
 
     const {  selectedMovie,   newRegistration, button } = this.state;
-    let { movies } = this.props;
-    let { user } = this.state;
+    let { movies, user } = this.props;
+   // let { user } = this.state;
     return (
       <Router>
         <Container fluid className="container-main">
@@ -178,6 +183,6 @@ import './main-view.scss';
 }
  //Any time the store is updated, this function will be called
 let mapStateToProps = state => {
-  return { movies: state.movies }
+  return { movies: state.movies ,  user: state.user}
 }
-export default connect(mapStateToProps, { setMovies } )(MainView);
+export default connect(mapStateToProps, { setMovies ,  setUser} )(MainView);
