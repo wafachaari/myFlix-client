@@ -5,14 +5,18 @@ import PropTypes from 'prop-types';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 import { Form, Button, CardDeck } from 'react-bootstrap';
-
-
+import { setFavorite } from '../../actions/actions';
+import { connect } from 'react-redux';
 import axios from "axios";
+const mapStateToProps = state => {
+  const { favorite } = state;
+  console(state);
+  return { favorite };
+};
 
 export class MovieView extends React.Component {
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
     this.state = {};
   }
 
@@ -33,14 +37,18 @@ export class MovieView extends React.Component {
       .then((response) => {
         console.log(response);
         console.log("Added to favorites!");
+        console.log(this.props);
+        props.setFavorite(true);
 
+        console.log(this.props);
 
       });
   }
 
 
   render() {
-    const { movie } = this.props;
+
+    const { movie, favorite } = this.props;
 
     if (!movie) return null;
 
@@ -58,13 +66,18 @@ export class MovieView extends React.Component {
           <ListGroup.Item>
 
 
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => this.addFavorite(movie)}
-            >
-              Add to Favorites
-              </Button>
+
+
+            {favorite ?
+              <ListGroup.Item>
+                <Button variant="secondary" disabled>Favorited</Button>
+              </ListGroup.Item>
+              :
+              <ListGroup.Item>
+                <Button onClick={() => this.addFavorite(movie)}>Add to Favorites</Button>
+              </ListGroup.Item>
+            }
+
 
           </ListGroup.Item>
 
@@ -73,3 +86,5 @@ export class MovieView extends React.Component {
     );
   }
 }
+
+export default connect(mapStateToProps, { setFavorite })(MovieView);
