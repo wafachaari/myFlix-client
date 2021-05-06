@@ -6,6 +6,9 @@ import { Form, Button } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import { MovieCard } from '../movie-card/movie-card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -48,7 +51,7 @@ export class ProfileView extends React.Component {
       .then((response) => {
         console.log(response.data.FavoriteMovies),
           this.setState({
-             
+
             username: response.data.Username,
             password: response.data.Password,
             email: response.data.Email,
@@ -71,7 +74,7 @@ export class ProfileView extends React.Component {
           Password: password,
           Email: email,
           Birthday: birthday,
-          
+
         },
         {
           headers: {
@@ -148,14 +151,17 @@ export class ProfileView extends React.Component {
   render() {
 
     const { movies, user, movie } = this.props;
-    /* const favoriteMovieList = this.state.favoriteMovies.filter(movie =>  movie.id != id) 
-     //this.setState({favoriteMovies:favoriteMovieList});
-       */
-   
+    //  const favoriteMovieList = this.state.favoriteMovies.filter(movie =>  movie._id != id) 
+    //this.setState({favoriteMovies:favoriteMovieList});
+    const favoriteMovieList = movies.filter((movie) => {
+      return this.state.favoriteMovies.includes(movie._id);
+    });
+
     console.log(this.state.favoriteMovies);
 
 
     return (
+
       <Container className="profile-view" fluid="true">
         <h1 className="myflix-title">Update-UserInformation</h1>
         <Form>
@@ -202,46 +208,52 @@ export class ProfileView extends React.Component {
 
         </Form>
 
-       
-        <div
-          className="favoriteMovies"
-          style={{
-            float: "right",
-            textAlign: "center",
-            width: "24rem",
-          }}
-        >
-          <h1>Favorite Movies</h1>
-          {this.state.favoriteMovies.map((movie) => {
-            return (
-              <div key={movie._id}>
-                <Card>
-                  {movie}
-                </Card>
-                <Button onClick={() => this.removeFavorite(movie)}>
-                  Remove
+
+        <Container className="profile-view" fluid="true">
+          <h1 className="myflix-title">Favorite Movies</h1>
+          <ListGroup className="favorites-groups" variant="flush">
+            {favoriteMovieList.length === 0 && <ListGroup.Item>You have no favorite movies.</ListGroup.Item>}
+
+
+
+
+            {favoriteMovieList.map((movie) => {
+              return (
+                <div key={movie._id}>
+                  <div>
+                    {movie.Title}
+                  </div>
+                  <div className="delete-div">
+                    <Button onClick={() => this.removeFavorite(movie._id)}>
+                      Remove
                       </Button>
-              </div>
-            );
-          })}
-        </div>
-      </Container>
+                  </div>
+                </div>
+              );
+            })}
+        </ListGroup>
+        </Container>
+        </Container>
     );
 
   }
 }
 
 ProfileView.propTypes = {
-  user: PropTypes.shape({
-    FavoriteMovies: PropTypes.arrayOf(
+          user: PropTypes.shape({
+          FavoriteMovies: PropTypes.arrayOf(
       PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        
+          _id: PropTypes.string.isRequired,
+
       })
     ),
     Username: PropTypes.string.isRequired,
     Password: PropTypes.string.isRequired,
     Email: PropTypes.string.isRequired,
     Birthday: PropTypes.string.isRequired
-  })
+  }),
+
+  movies: PropTypes.array.isRequired,
+
+  favoriteMovies: PropTypes.array,
 }
