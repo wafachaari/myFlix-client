@@ -3,7 +3,7 @@
 //add a movies state that will hold the list of movies
 //s constructor method to create the component
 import React from 'react';
- 
+
 import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import { connect } from 'react-redux';
@@ -29,12 +29,12 @@ import './main-view.scss';
 
 
 
-  class MainView extends React.Component {
+class MainView extends React.Component {
 
   constructor() {
     super();
     this.state = {
-      
+
       selectedMovie: null,
       user: null,
       newRegistration: null,
@@ -43,18 +43,18 @@ import './main-view.scss';
 
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
-    let user = localStorage.getItem('user')
+
+    let user = localStorage.getItem('user');
+
     if (accessToken !== null) {
-     /* this.setState({
-        user: localStorage.getItem('user')
-      });*/
+      /* this.setState({
+         user: localStorage.getItem('user')
+       });*/
       this.props.setUser(user);
       this.getMovies(accessToken);
     }
-  }
 
-  //The moment a user logs in, a GET request is made to the “movies” 
-  //endpoint by passing the bearer authorization in the header of the HTTP request (the getMovies method is called)
+  }
 
   getMovies(token) {
     axios.get('https://movie-api-db-30.herokuapp.com/movies', {
@@ -62,10 +62,10 @@ import './main-view.scss';
     })
       .then(response => {
         // Assign the result to the state
-        
-         // movies: response.data,
-          this.props.setMovies(response.data);
-        
+
+        // movies: response.data,
+        this.props.setMovies(response.data);
+
       })
       .catch(function (error) {
         console.log(error);
@@ -78,6 +78,7 @@ import './main-view.scss';
     /*this.setState({
       user: authData.user.Username
     });*/
+
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
@@ -100,17 +101,17 @@ import './main-view.scss';
     localStorage.removeItem('user');
     this.props.setUser(user);
     localStorage.clear();
-  /*  this.setState({
-      user: null
-    });*/
+    /*  this.setState({
+        user: null
+      });*/
   }
 
 
   render() {
 
-    const {  selectedMovie,   newRegistration, button } = this.state;
+    const { selectedMovie, newRegistration, button } = this.state;
     let { movies, user } = this.props;
-   // let { user } = this.state;
+
     return (
       <Router>
         <Container fluid className="container-main">
@@ -118,21 +119,21 @@ import './main-view.scss';
             <Navbar bg="light" variant="light"
               collapseOnSelect
               fixed='top' expand="lg"  >
-              <Navbar.Brand href="/"   className="navbarbrand" >myFlix</Navbar.Brand>
+              <Navbar.Brand href="/" className="navbarbrand" >myFlix</Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                   {/* <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                   <Button variant="outline-success">Search</Button> */}
-                  
+
                 </Nav>
                 <Form inline>
-                <NavItem>
-                    <NavLink to= "/" className="button"  onClick={() => { this.onLoggedOut() }}>Logout</NavLink >
-                  
-                   
-                    <NavLink to="/users/${localStorage.getItem('user')}"  className="button" >  Profile</NavLink >
-                    </NavItem>
+                  <NavItem>
+                    <NavLink to="/" className="button" onClick={() => { this.onLoggedOut() }}>Logout</NavLink >
+
+
+                    <NavLink to="/users/${localStorage.getItem('user')}" className="button" >  Profile</NavLink >
+                  </NavItem>
                 </Form>
               </Navbar.Collapse>
             </Navbar>
@@ -147,7 +148,7 @@ import './main-view.scss';
               //     <MovieCard movie={m} />
               //   </Col>
               // ))
-              return <MoviesList movies={movies}/>;
+              return <MoviesList movies={movies} />;
             }} />
             <Route path="/register" render={() => <RegistrationView />} />
 
@@ -163,7 +164,7 @@ import './main-view.scss';
               </Col>
             }
             } />
-   <Route path="/genres/:name" render={({ match, history }) => {
+            <Route path="/genres/:name" render={({ match, history }) => {
               if (movies.length === 0) return <div className="main-view" />;
               return <Col md={8}>
                 <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} onBackClick={() => history.goBack()} />
@@ -173,7 +174,9 @@ import './main-view.scss';
             <Route path="/users/:username" render={() => {
               if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
               if (movies.length === 0) return <div className="main-view" />;
-              return <ProfileView onLogOut={user => this.onLogOut(!user)} />
+              return <ProfileView
+              movies={movies} 
+                onLogOut={user => this.onLogOut(!user)} />
             }} />
           </Row>
         </Container>
@@ -181,8 +184,31 @@ import './main-view.scss';
     );
   }
 }
- //Any time the store is updated, this function will be called
+//Any time the store is updated, this function will be called
 let mapStateToProps = state => {
-  return { movies: state.movies ,  user: state.user}
+  return { movies: state.movies, user: state.user }
 }
-export default connect(mapStateToProps, { setMovies ,  setUser} )(MainView);
+export default connect(mapStateToProps, { setMovies, setUser })(MainView);
+
+
+MainView.propTypes = {
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    Title: PropTypes.string.isRequired,
+    Description: PropTypes.string.isRequired,
+    Genre: PropTypes.shape({
+       
+      Name: PropTypes.string.isRequired,
+      Description: PropTypes.string.isRequired
+    }),
+    Director: PropTypes.shape({
+      
+      Name: PropTypes.string.isRequired,
+      
+    }),
+   
+  })
+),
+ user: PropTypes.string.isRequired
+};
