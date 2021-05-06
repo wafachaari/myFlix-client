@@ -1,6 +1,10 @@
 .open-button {
   color: black;
 }
+
+.directorname {
+  color: black;
+}
 .submit-button {
   background-color: black;
 }
@@ -19,6 +23,10 @@
 }
 .container-main {
   margin-top: 100px;
+}
+
+.navbarbrand {
+  font-family: "Monoton", cursive;
 }
 .my-flix {
   color: steelblue;
