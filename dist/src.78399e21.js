@@ -52432,17 +52432,14 @@ Object.defineProperty(exports, "__esModule", {
 exports.setMovies = setMovies;
 exports.setFilter = setFilter;
 exports.setUser = setUser;
-exports.setButton = setButton;
 exports.setFavorite = setFavorite;
-exports.SET_FAVORITE = exports.SET_BUTTON = exports.SET_USER = exports.SET_FILTER = exports.SET_MOVIES = void 0;
+exports.SET_FAVORITE = exports.SET_USER = exports.SET_FILTER = exports.SET_MOVIES = void 0;
 var SET_MOVIES = 'SET_MOVIES';
 exports.SET_MOVIES = SET_MOVIES;
 var SET_FILTER = 'SET_FILTER';
 exports.SET_FILTER = SET_FILTER;
 var SET_USER = 'SET_USER';
 exports.SET_USER = SET_USER;
-var SET_BUTTON = 'SET_BUTTON';
-exports.SET_BUTTON = SET_BUTTON;
 var SET_FAVORITE = 'SET_FAVORITE';
 exports.SET_FAVORITE = SET_FAVORITE;
 
@@ -52463,13 +52460,6 @@ function setFilter(value) {
 function setUser(value) {
   return {
     type: SET_USER,
-    value: value
-  };
-}
-
-function setButton(value) {
-  return {
-    type: SET_BUTTON,
     value: value
   };
 }
@@ -53815,11 +53805,13 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       var accessToken = localStorage.getItem('token');
+      var user = localStorage.getItem('user');
 
       if (accessToken !== null) {
-        this.setState({
-          user: localStorage.getItem('user')
-        });
+        /* this.setState({
+           user: localStorage.getItem('user')
+         });*/
+        this.props.setUser(user);
         this.getMovies(accessToken);
       }
     } //The moment a user logs in, a GET request is made to the “movies” 
@@ -53846,9 +53838,11 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     key: "onLoggedIn",
     value: function onLoggedIn(authData) {
       console.log(authData);
-      this.setState({
+      this.props.setUser(authData.user.Username);
+      /*this.setState({
         user: authData.user.Username
-      });
+      });*/
+
       localStorage.setItem('token', authData.token);
       localStorage.setItem('user', authData.user.Username);
       this.getMovies(authData.token);
@@ -53872,9 +53866,11 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     value: function onLoggedOut() {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      this.setState({
-        user: null
-      });
+      this.props.setUser(user);
+      localStorage.clear();
+      /*  this.setState({
+          user: null
+        });*/
     }
   }, {
     key: "render",
@@ -53885,8 +53881,10 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           selectedMovie = _this$state.selectedMovie,
           newRegistration = _this$state.newRegistration,
           button = _this$state.button;
-      var movies = this.props.movies;
-      var user = this.state.user;
+      var _this$props = this.props,
+          movies = _this$props.movies,
+          user = _this$props.user; // let { user } = this.state;
+
       return /*#__PURE__*/_react.default.createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/_react.default.createElement(_Container.default, {
         fluid: true,
         className: "container-main"
@@ -54024,12 +54022,14 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    movies: state.movies
+    movies: state.movies,
+    user: state.user
   };
 };
 
 var _default = (0, _reactRedux.connect)(mapStateToProps, {
-  setMovies: _actions.setMovies
+  setMovies: _actions.setMovies,
+  setUser: _actions.setUser
 })(MainView);
 
 exports.default = _default;
@@ -54858,19 +54858,6 @@ function user() {
   }
 }
 
-function button() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  var action = arguments.length > 1 ? arguments[1] : undefined;
-
-  switch (action.type) {
-    case _actions.SET_BUTTON:
-      return action.value;
-
-    default:
-      return state;
-  }
-}
-
 function favorite() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   var action = arguments.length > 1 ? arguments[1] : undefined;
@@ -54888,7 +54875,6 @@ var moviesApp = (0, _redux.combineReducers)({
   visibilityFilter: visibilityFilter,
   movies: movies,
   user: user,
-  button: button,
   favorite: favorite
 });
 var _default = moviesApp;
@@ -55020,7 +55006,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49426" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51852" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
