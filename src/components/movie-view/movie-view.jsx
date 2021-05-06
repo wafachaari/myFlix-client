@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 import { Form, Button, CardDeck } from 'react-bootstrap';
- 
- 
+
+
 import axios from "axios";
 
 export class MovieView extends React.Component {
@@ -15,7 +15,7 @@ export class MovieView extends React.Component {
 
     this.state = {};
   }
-  
+
   addFavorite(movie) {
     let token = localStorage.getItem("token");
     let url =
@@ -32,45 +32,44 @@ export class MovieView extends React.Component {
       })
       .then((response) => {
         console.log(response);
-          console.log("Added to favorites!");
-        
-         
+        console.log("Added to favorites!");
+
+
       });
   }
 
- 
+
   render() {
     const { movie } = this.props;
 
     if (!movie) return null;
 
-return(
+    return (
       <Card className="movie-view" style={{ width: '32rem' }}>
-      <Card.Img variant="top" src={movie.ImagePath} />
-      <Card.Body>
-        <Card.Text className="movie-title">{movie.Title}</Card.Text>
-        <Card.Text className="movie-description">{movie.Description}</Card.Text>
-        <ListGroup  >
+        <Card.Img variant="top" src={movie.ImagePath} />
+        <Card.Body>
+          <Card.Text className="movie-title">{movie.Title}</Card.Text>
+          <Card.Text className="movie-description">{movie.Description}</Card.Text>
+          <ListGroup  >
             <ListGroup.Item>Genre: {movie.Genre.Name}</ListGroup.Item>
             <ListGroup.Item>Director: {movie.Director.Name}</ListGroup.Item>
-            
-        </ListGroup>
-        <ListGroup.Item>
-       
-           
-        <Button
-                variant="primary"
-                size="sm"
-                onClick={() => this.addFavorite(movie)}
-              >
-                Add to Favorites
+
+          </ListGroup>
+          <ListGroup.Item>
+
+
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => this.addFavorite(movie)}
+            >
+              Add to Favorites
               </Button>
-              
-              </ListGroup.Item>
-             
-      </Card.Body>
-      </Card> 
+
+          </ListGroup.Item>
+
+        </Card.Body>
+      </Card>
     );
   }
 }
- 
