@@ -13,20 +13,15 @@ export class GenreView extends React.Component {
 
     this.state = {};
   }
-
-
   render() {
     const { genre } = this.props;
-
-
     if (!genre) return null;
-
     return (
-      <Card className = "genre-view" style={{ width: '32rem' }}>
+      <Card className="genre-view" style={{ width: '32rem' }}>
         <Card.Body>
-          <Card.Title className = "genre-name">{genre.Name}</Card.Title>
-          <Card.Text className = "genre-description">{genre.Description}</Card.Text>
-          <Link to = {`/`}>
+          <Card.Title className="genre-name">{genre.Name}</Card.Title>
+           <Card.Text className="genre-description">{genre.Description}</Card.Text>
+          <Link to={`/`}>
             <Button className="back-button">Back</Button>
           </Link>
         </Card.Body>
@@ -34,7 +29,6 @@ export class GenreView extends React.Component {
     );
   }
 }
-
 GenreView.propTypes = {
   genre: PropTypes.shape({
     Name: PropTypes.string.isRequired,
