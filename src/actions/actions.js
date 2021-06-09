@@ -17,8 +17,6 @@ export function setUser(value) {
   return { type: SET_USER, value };
 }
 
- 
-
 export function setFavorite(value) {
   return { type: SET_FAVORITE, value };
 }
