@@ -15,6 +15,7 @@ export function LoginView(props) {
   const handleSubmit = (e) => {
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
+      console.log("kkdd");
       e.preventDefault();
       e.stopPropagation();
       setLogin(null);
@@ -22,7 +23,6 @@ export function LoginView(props) {
       return;
     }
     e.preventDefault();
-    /* Send a request to the server for authentication */
     axios.post('https://movie-api-db-30.herokuapp.com/login', {
       Username: username,
       Password: password
@@ -51,16 +51,16 @@ export function LoginView(props) {
     setLogin(null);
   }
 
-
   return (
     <Container className="login-view" fluid="true">
-     
-      <Form noValidate validated={validated} onSubmit={handleSubmit} className="login-form">
+      <Form noValidate validated={validated}
+        onSubmit={handleSubmit}
+        className="login-form">
         <Form.Group controlId="formUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control type="text" placeholder="Enter username" pattern="^[a-zA-Z0-9]{5,}" required value={username} onChange={e => setUsernameAndLogin(e)} />
           <Form.Control.Feedback type="invalid">
-            Username isn't at least 5 characters or alphanumeric.
+            Username must contain at least 5 characters or alphanumeric.
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group controlId="formPassword">
@@ -69,11 +69,15 @@ export function LoginView(props) {
           <Form.Control.Feedback type="invalid">
             Please enter a password.
           </Form.Control.Feedback>
-          {!login ? null
-          :
-          <Form.Text className="incorrect-text">
-            Incorrect username or password.
-          </Form.Text>}
+          {login ? null
+            : 
+            <div>
+              <Form.Text className="incorrect-text">
+                please enter a valid username and password
+               </Form.Text>
+              <Form.Text className="incorrect">**Username must contain at least 5 characters or alphanumeric.
+            </Form.Text></div>
+          }
         </Form.Group>
         <Button className="submit-button" variant="primary" type="submit">Submit</Button>
         <Form.Group className="registration-group" controlId="formRegistration">
