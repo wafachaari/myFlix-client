@@ -5,34 +5,40 @@ import { Button } from 'react-bootstrap';
 import { setFavorite } from '../../actions/actions';
 import { connect } from 'react-redux';
 import axios from "axios";
+import { Link } from 'react-router-dom';
+import './movie-view.scss';
+
 const mapStateToProps = state => {
   const { favorite } = state;
   return { favorite };
 };
-
 export class MovieView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      fav: false
+    };
   }
-
   addFavorite(movie) {
     const token = localStorage.getItem("token");
-    let url = `https://movie-api-db-30.herokuapp.com/users/${localStorage.getItem("user")}/movies/${movie._id}`
+    const url = `https://movie-api-db-30.herokuapp.com/users/${localStorage.getItem("user")}/movies/${movie._id}`;
     axios
       .post(url, "", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        console.log(response);
         console.log("Added to favorites!");
-        console.log(this.props);
-        props.setFavorite(true);
-
-        console.log(this.props);
-
+        this.setfav();
+        console.log(fav);
       });
   }
+
+  setfav() {
+    this.setState({
+      fav: true
+    });
+  }
+  
   render() {
     const { movie, favorite } = this.props;
     if (!movie) return null;
@@ -46,17 +52,18 @@ export class MovieView extends React.Component {
             <ListGroup.Item>Genre: {movie.Genre.Name}</ListGroup.Item>
             <ListGroup.Item>Director: {movie.Director.Name}</ListGroup.Item>
           </ListGroup>
-        
-            {favorite ?
-              <ListGroup.Item>
-                <Button variant="secondary" disabled>Favorited</Button>
-              </ListGroup.Item>
-              :
-              <ListGroup.Item>
-                <Button onClick={() => this.addFavorite(movie)}>Add to Favorites</Button>
-              </ListGroup.Item>
-            }
-          
+          {this.state.fav ?
+            <ListGroup.Item>
+              <Button variant="secondary" disabled>Favorited</Button>
+            </ListGroup.Item>
+            :
+            <ListGroup.Item>
+              <Button onClick={() => this.addFavorite(movie)}>Add to Favorites</Button>
+            </ListGroup.Item>
+          }
+              <Link to={`/`}>
+            <Button className="back-button">Back</Button>
+          </Link>
         </Card.Body>
       </Card>
     );
