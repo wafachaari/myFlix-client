@@ -17,6 +17,25 @@
   background-color: white;
   color: black;
 }
+
+.login-view {
+  font-family: "Raleway", sans-serif;
+}
+
+.login-form {
+  color: blue;
+}
+
+.incorrect-text {
+  margin-top: 25px;
+  color: #dc3545;
+  font-size: small;
+}
+
+.incorrect {
+  color: #dc3545;
+  font-size: x-small;
+}
 .submit-button {
   background-color: black;
 }
@@ -25,12 +44,56 @@
   background-color: white;
   color: black;
 }
+.update-button {
+  margin: 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.deregister-button {
+  margin: 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.favorite-movies {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-view {
+  margin: 15px;
+}
+.movie-view {
+  font-family: "Raleway", sans-serif;
+}
+
+.movie-title {
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.back-button {
+  background-color: black;
+  margin-top: 1rem;
+}
+
+.disabled-button {
+  margin-top: 1rem;
+}
+
+.movie-view {
+  margin: 0 auto;
+}
 .container-main {
   margin-top: 100px;
 }
 
 .navbarbrand {
   font-family: "Monoton", cursive;
+}
+
+.navitem {
+  margin: 10px;
 }
 .my-flix {
   color: steelblue;
