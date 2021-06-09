@@ -7,11 +7,11 @@ import React from 'react';
 import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import { connect } from 'react-redux';
-import { Link, BrowserRouter as Router, Route, Redirect, NavLink } from "react-router-dom";
-import Card from 'react-bootstrap/Card';
+import { BrowserRouter as Router, Route, Redirect, NavLink } from "react-router-dom";
+
 import Container from 'react-bootstrap/Container';
-import { Navbar, Nav, Form, FormControl, NavbarBrand, NavItem } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
+import { Navbar, Nav, Form, NavbarBrand, NavItem } from 'react-bootstrap';
+
 import Col from 'react-bootstrap/Col';
 
 import { setMovies, setUser } from '../../actions/actions';
@@ -34,7 +34,6 @@ class MainView extends React.Component {
   constructor() {
     super();
     this.state = {
-
       selectedMovie: null,
       user: null,
       newRegistration: null,
@@ -42,18 +41,12 @@ class MainView extends React.Component {
   }
 
   componentDidMount() {
-    let accessToken = localStorage.getItem('token');
-
-    let user = localStorage.getItem('user');
-
+    const accessToken = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
     if (accessToken !== null) {
-      /* this.setState({
-         user: localStorage.getItem('user')
-       });*/
       this.props.setUser(user);
       this.getMovies(accessToken);
     }
-
   }
 
   getMovies(token) {
@@ -61,11 +54,7 @@ class MainView extends React.Component {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
-        // Assign the result to the state
-
-        // movies: response.data,
         this.props.setMovies(response.data);
-
       })
       .catch(function (error) {
         console.log(error);
@@ -75,10 +64,6 @@ class MainView extends React.Component {
   onLoggedIn(authData) {
     console.log(authData);
     this.props.setUser(authData.user.Username);
-    /*this.setState({
-      user: authData.user.Username
-    });*/
-
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
@@ -101,15 +86,11 @@ class MainView extends React.Component {
     localStorage.removeItem('user');
     this.props.setUser(user);
     localStorage.clear();
-    /*  this.setState({
-        user: null
-      });*/
   }
 
 
   render() {
 
-    const { selectedMovie, newRegistration, button } = this.state;
     let { movies, user } = this.props;
 
     return (
@@ -132,7 +113,7 @@ class MainView extends React.Component {
                     <NavLink to="/" className="button" onClick={() => { this.onLoggedOut() }}>Logout</NavLink >
 
 
-                    <NavLink to="/users/${localStorage.getItem('user')}" className="button" >  Profile</NavLink >
+                    <NavLink to={`/users/${localStorage.getItem('user')}`} className="button" >  Profile</NavLink >
                   </NavItem>
                 </Form>
               </Navbar.Collapse>
@@ -175,7 +156,7 @@ class MainView extends React.Component {
               if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
               if (movies.length === 0) return <div className="main-view" />;
               return <ProfileView
-              movies={movies} 
+                movies={movies}
                 onLogOut={user => this.onLogOut(!user)} />
             }} />
           </Row>
@@ -185,7 +166,7 @@ class MainView extends React.Component {
   }
 }
 //Any time the store is updated, this function will be called
-let mapStateToProps = state => {
+const mapStateToProps = state => {
   return { movies: state.movies, user: state.user }
 }
 export default connect(mapStateToProps, { setMovies, setUser })(MainView);
@@ -194,21 +175,21 @@ export default connect(mapStateToProps, { setMovies, setUser })(MainView);
 MainView.propTypes = {
   movies: PropTypes.arrayOf(
     PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    Title: PropTypes.string.isRequired,
-    Description: PropTypes.string.isRequired,
-    Genre: PropTypes.shape({
-       
-      Name: PropTypes.string.isRequired,
-      Description: PropTypes.string.isRequired
-    }),
-    Director: PropTypes.shape({
-      
-      Name: PropTypes.string.isRequired,
-      
-    }),
-   
-  })
-),
- user: PropTypes.string.isRequired
+      _id: PropTypes.string.isRequired,
+      Title: PropTypes.string.isRequired,
+      Description: PropTypes.string.isRequired,
+      Genre: PropTypes.shape({
+
+        Name: PropTypes.string.isRequired,
+        Description: PropTypes.string.isRequired
+      }),
+      Director: PropTypes.shape({
+
+        Name: PropTypes.string.isRequired,
+
+      }),
+
+    })
+  ),
+  user: PropTypes.string.isRequired
 };
