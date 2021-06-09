@@ -1,6 +1,5 @@
 
-//movie in const { movie } = this.props is the name of the prop used in <MovieCard … />.
-import React from 'react';
+ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -13,7 +12,6 @@ export class MovieCard extends React.Component {
     const { movie } = this.props;
     return (
       <Card className="card" style={{ width: '200' }}>
-
         <Card.Img variant="top" src={movie.ImagePath} />
         <Card.Body>
           <Card.Title className="movie-title">{movie.Title}</Card.Title>
@@ -21,7 +19,6 @@ export class MovieCard extends React.Component {
           <Link to={`/movies/${movie._id}`}>
             <Button variant="link">Movie Details</Button>
           </Link>
-
           <Link to={`/directors/${movie.Director.Name}`}>
             <Button variant="link" className="btn">  Director:  <span className="directorname">  {movie.Director.Name}</span></Button>
           </Link>
@@ -41,7 +38,6 @@ MovieCard.propTypes = {
     Genre: PropTypes.shape({
       Name: PropTypes.string.isRequired,
       Description: PropTypes.string.isRequired,
-
     }),
     Director: PropTypes.shape({
       Name: PropTypes.string.isRequired,
@@ -50,7 +46,5 @@ MovieCard.propTypes = {
       Birth: PropTypes.string.isRequired,
       Death: PropTypes.string,
     }),
-
-  }).isRequired,
-  /*onMovieClick: PropTypes.func.isRequired*/
+  }).isRequired, 
 };
