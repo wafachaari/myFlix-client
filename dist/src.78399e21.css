@@ -5,6 +5,10 @@
 .directorname {
   color: black;
 }
+
+.btn {
+  text-align: left;
+}
 .submit-button {
   background-color: black;
 }
