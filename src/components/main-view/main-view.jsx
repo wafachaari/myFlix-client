@@ -1,33 +1,21 @@
-// create MainView component using the generic React.Component template as its foundation.
-//render ->returns the visual representation of the component(should contain only one root element)
-//add a movies state that will hold the list of movies
-//s constructor method to create the component
 import React from 'react';
-
 import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect, NavLink } from "react-router-dom";
-
 import Container from 'react-bootstrap/Container';
 import { Navbar, Nav, Form, NavbarBrand, NavItem } from 'react-bootstrap';
-
 import Col from 'react-bootstrap/Col';
-
 import { setMovies, setUser } from '../../actions/actions';
 import MoviesList from '../movies-list/movies-list';
 import PropTypes from 'prop-types';
-
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view'
 import { ProfileView } from '../profile-view/profile-view';
 import { DirectorView } from '../director-view/director-view';
-//import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { GenreView } from '../genre-view/genre-view';
 import './main-view.scss';
-
-
 
 class MainView extends React.Component {
 
@@ -62,11 +50,11 @@ class MainView extends React.Component {
   }
 
   onLoggedIn(authData) {
-    console.log(authData);
     this.props.setUser(authData.user.Username);
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
+
   }
 
   onRegister(newRegistration) {
@@ -81,18 +69,14 @@ class MainView extends React.Component {
     });
   }
 
-  onLoggedOut() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+  onLogOut(user) {
     this.props.setUser(user);
     localStorage.clear();
+    window.open('/', '_self');
   }
 
-
   render() {
-
     let { movies, user } = this.props;
-
     return (
       <Router>
         <Container fluid className="container-main">
@@ -104,35 +88,23 @@ class MainView extends React.Component {
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                  {/* <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                  <Button variant="outline-success">Search</Button> */}
-
                 </Nav>
                 <Form inline>
                   <NavItem>
-                    <NavLink to="/" className="button" onClick={() => { this.onLoggedOut() }}>Logout</NavLink >
-
-
-                    <NavLink to={`/users/${localStorage.getItem('user')}`} className="button" >  Profile</NavLink >
+                    <NavLink to="/" className="navitem" onClick={user => this.onLogOut(!user)}>Logout</NavLink >
+                    <NavLink to={`/users/${localStorage.getItem('user')}`} className="naviten" >  Profile</NavLink >
                   </NavItem>
                 </Form>
               </Navbar.Collapse>
             </Navbar>
           </header>
-
           <Row className="main-view justify-content-lg-center">
             <Route exact path="/" render={() => {
               if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
               if (movies.length === 0) return <div className="main-view" />;
-              // return movies.map(m => (
-              //   <Col md={3} key={m._id}>
-              //     <MovieCard movie={m} />
-              //   </Col>
-              // ))
               return <MoviesList movies={movies} />;
             }} />
             <Route path="/register" render={() => <RegistrationView />} />
-
             <Route path="/movies/:movieId" render={({ match }) => {
               return <Col md={8}>
                 <MovieView movie={movies.find(m => m._id === match.params.movieId)} onBackClick={() => history.goBack()} />
@@ -157,7 +129,8 @@ class MainView extends React.Component {
               if (movies.length === 0) return <div className="main-view" />;
               return <ProfileView
                 movies={movies}
-                onLogOut={user => this.onLogOut(!user)} />
+                onLogOut={user => this.onLogOut(!user)}
+              />
             }} />
           </Row>
         </Container>
@@ -165,13 +138,10 @@ class MainView extends React.Component {
     );
   }
 }
-//Any time the store is updated, this function will be called
 const mapStateToProps = state => {
   return { movies: state.movies, user: state.user }
 }
 export default connect(mapStateToProps, { setMovies, setUser })(MainView);
-
-
 MainView.propTypes = {
   movies: PropTypes.arrayOf(
     PropTypes.shape({
@@ -179,16 +149,12 @@ MainView.propTypes = {
       Title: PropTypes.string.isRequired,
       Description: PropTypes.string.isRequired,
       Genre: PropTypes.shape({
-
         Name: PropTypes.string.isRequired,
         Description: PropTypes.string.isRequired
       }),
       Director: PropTypes.shape({
-
         Name: PropTypes.string.isRequired,
-
       }),
-
     })
   ),
   user: PropTypes.string.isRequired
