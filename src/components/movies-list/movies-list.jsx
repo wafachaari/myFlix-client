@@ -15,7 +15,7 @@ function MoviesList(props) {
   if (visibilityFilter !== '') {
     filteredMovies = movies.filter(m => m.Title.toLowerCase().includes(visibilityFilter.toLowerCase()));
   }
-  if (!movies) return <div className="main-view"/>;
+  if (!movies) return <div className="main-view" />;
   return <>
     <Col md={12} style={{ margin: '1em' }}>
       <VisibilityFilterInput visibilityFilter={visibilityFilter} />
