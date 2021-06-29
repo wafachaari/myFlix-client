@@ -2,9 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Redirect, NavLink } from "react-router-dom";
+import { BrowserRouter as Router, Route,  NavLink } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
-import { Navbar, Nav, Form, NavbarBrand, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, Form,  NavItem } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import { setMovies, setUser } from '../../actions/actions';
 import MoviesList from '../movies-list/movies-list';
@@ -18,7 +18,6 @@ import { GenreView } from '../genre-view/genre-view';
 import './main-view.scss';
 
 class MainView extends React.Component {
-
   constructor() {
     super();
     this.state = {
@@ -54,7 +53,6 @@ class MainView extends React.Component {
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
-
   }
 
   onRegister(newRegistration) {
